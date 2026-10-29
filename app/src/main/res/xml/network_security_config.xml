@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Prototype: the server runs on a Raspberry Pi of the local network, in plain HTTP.
+     Remove cleartextTrafficPermitted (HTTPS only) as soon as the server has a domain name and a certificate. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
