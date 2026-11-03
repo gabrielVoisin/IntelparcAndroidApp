@@ -26,6 +26,13 @@ data class RegisterIn(
     val clientName: String? = null,
 )
 
+/** TEST ONLY (server TURBO_LOGIN=true): password-free sign-in, like the website's Turbo button. */
+@Serializable
+data class TurboIn(val clientName: String? = null)
+
+@Serializable
+data class TurboStatusOut(val enabled: Boolean = false)
+
 @Serializable
 data class AppLoginIn(val email: String, val password: String, val clientName: String? = null)
 

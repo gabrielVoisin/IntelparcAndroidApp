@@ -33,6 +33,9 @@
     <string name="staff_notice">Authorised staff only.</string>
     <string name="login">Sign in</string>
     <string name="open_admin">Open the admin area</string>
+    <string name="turbo_login">⚡ Turbo: sign in without a password</string>
+    <string name="turbo_hint">Temporary button for testing (TURBO_LOGIN).</string>
+    <string name="err_turbo_disabled">The Turbo button is turned off on the server.</string>
     <string name="no_account_create">No account yet? Create one</string>
     <string name="step_of">Step %1$d of %2$d · %3$s</string>
     <string name="step_account">Account</string>

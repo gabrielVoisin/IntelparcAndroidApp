@@ -34,6 +34,9 @@ class AuthViewModel(private val c: AppContainer) : ViewModel() {
         private set
     var serverUrl by mutableStateOf(c.store.serverUrl)
         private set
+    /** TEST ONLY: the server allows the green Turbo button (TURBO_LOGIN=true). */
+    var turboEnabled by mutableStateOf(false)
+        private set
 
     // Sign-up form, kept while the driver moves between the 4 steps
     var plateCountry by mutableStateOf("CH")
@@ -69,6 +72,23 @@ class AuthViewModel(private val c: AppContainer) : ViewModel() {
                 .onFailure { error = it.code() }
         } else {
             c.driver.login(email.trim(), password)
+                .onSuccess { driver = it.driver; onDone(false, it.driver.missingStep()) }
+                .onFailure { error = it.code() }
+        }
+    }
+
+    fun checkTurbo() {
+        viewModelScope.launch { turboEnabled = c.staff.turboEnabled().getOrDefault(false) }
+    }
+
+    /** TEST ONLY: password-free sign-in (first administrator, or the server's test driver). */
+    fun loginTurbo(staff: Boolean, onDone: (Boolean, String?) -> Unit) = task {
+        if (staff) {
+            c.staff.turbo()
+                .onSuccess { onDone(true, null) }
+                .onFailure { error = it.code() }
+        } else {
+            c.driver.turbo()
                 .onSuccess { driver = it.driver; onDone(false, it.driver.missingStep()) }
                 .onFailure { error = it.code() }
         }
