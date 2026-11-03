@@ -52,6 +52,11 @@ class DriverRepository(private val api: ApiClient, private val store: SessionSto
         d().login(AppLoginIn(email, password, clientName)).also { remember(it) }
     }
 
+    /** TEST ONLY: signs in as the server's test driver, without a password (TURBO_LOGIN). */
+    suspend fun turbo() = apiCall {
+        d().turbo(TurboIn(clientName)).also { remember(it) }
+    }
+
     private fun remember(t: DriverTokenOut) =
         store.signIn(Role.DRIVER, t.accessToken, t.refreshToken, "${t.driver.firstName} ${t.driver.lastName}")
 
@@ -107,6 +112,16 @@ class StaffRepository(private val api: ApiClient, private val store: SessionStor
 
     suspend fun login(email: String, password: String) = apiCall {
         s().login(StaffLoginIn(email, password, clientName)).also {
+            store.signIn(Role.STAFF, it.accessToken, it.refreshToken, it.user.fullName, it.user.role)
+        }
+    }
+
+    /** TEST ONLY: true when the server allows the password-free Turbo sign-in (TURBO_LOGIN). */
+    suspend fun turboEnabled() = apiCall { s().turboStatus().enabled }
+
+    /** TEST ONLY: signs in as the first administrator, without a password. */
+    suspend fun turbo() = apiCall {
+        s().turbo(TurboIn(clientName)).also {
             store.signIn(Role.STAFF, it.accessToken, it.refreshToken, it.user.fullName, it.user.role)
         }
     }

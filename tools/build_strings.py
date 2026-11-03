@@ -48,6 +48,9 @@ S: dict[str, tuple[str, str]] = {
     "staff_notice": ("Accès réservé au personnel habilité.", "Authorised staff only."),
     "login": ("Se connecter", "Sign in"),
     "open_admin": ("Accéder à l'espace admin", "Open the admin area"),
+    "turbo_login": ("⚡ Turbo : entrer sans mot de passe", "⚡ Turbo: sign in without a password"),
+    "turbo_hint": ("Bouton temporaire pour la phase de test (TURBO_LOGIN).", "Temporary button for testing (TURBO_LOGIN)."),
+    "err_turbo_disabled": ("Le bouton Turbo est désactivé sur le serveur.", "The Turbo button is turned off on the server."),
     "no_account_create": ("Pas encore de compte ? Créer un compte", "No account yet? Create one"),
     # sign-up
     "step_of": ("Étape %1$d sur %2$d · %3$s", "Step %1$d of %2$d · %3$s"),

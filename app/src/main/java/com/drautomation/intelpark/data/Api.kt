@@ -16,6 +16,7 @@ import retrofit2.http.Query
 interface DriverApi {
     @POST("app/auth/register") suspend fun register(@Body body: RegisterIn): DriverTokenOut
     @POST("app/auth/login") suspend fun login(@Body body: AppLoginIn): DriverTokenOut
+    @POST("app/auth/turbo") suspend fun turbo(@Body body: TurboIn): DriverTokenOut
     @POST("app/auth/refresh") suspend fun refresh(@Body body: RefreshIn): DriverTokenOut
     @POST("app/auth/logout") suspend fun logout(@Body body: RefreshIn): Response<Unit>
 
@@ -50,6 +51,8 @@ interface DriverApi {
 /** Agents and administrators: the same API as the website (backend/app/api/v1). */
 interface StaffApi {
     @POST("auth/login") suspend fun login(@Body body: StaffLoginIn): StaffTokenOut
+    @GET("auth/turbo") suspend fun turboStatus(): TurboStatusOut
+    @POST("auth/turbo") suspend fun turbo(@Body body: TurboIn): StaffTokenOut
     @POST("auth/refresh") suspend fun refresh(@Body body: RefreshIn): StaffTokenOut
     @POST("auth/logout") suspend fun logout(@Body body: RefreshIn): Response<Unit>
 

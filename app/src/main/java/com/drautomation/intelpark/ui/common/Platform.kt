@@ -65,6 +65,7 @@ fun errorMessage(code: String?): Int = when (code) {
     "network" -> R.string.err_network
     "server_url_invalid" -> R.string.err_server_url
     "invalid_credentials" -> R.string.err_invalid_credentials
+    "turbo_disabled", "no_admin" -> R.string.err_turbo_disabled
     "email_already_used" -> R.string.err_email_used
     "plate_already_registered" -> R.string.err_plate_used
     "phone_code_invalid" -> R.string.err_code_invalid

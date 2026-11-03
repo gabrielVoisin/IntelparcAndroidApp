@@ -33,6 +33,9 @@
     <string name="staff_notice">Accès réservé au personnel habilité.</string>
     <string name="login">Se connecter</string>
     <string name="open_admin">Accéder à l\'espace admin</string>
+    <string name="turbo_login">⚡ Turbo : entrer sans mot de passe</string>
+    <string name="turbo_hint">Bouton temporaire pour la phase de test (TURBO_LOGIN).</string>
+    <string name="err_turbo_disabled">Le bouton Turbo est désactivé sur le serveur.</string>
     <string name="no_account_create">Pas encore de compte ? Créer un compte</string>
     <string name="step_of">Étape %1$d sur %2$d · %3$s</string>
     <string name="step_account">Compte</string>

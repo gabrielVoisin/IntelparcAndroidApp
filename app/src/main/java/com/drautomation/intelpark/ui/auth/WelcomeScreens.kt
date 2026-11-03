@@ -19,12 +19,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.drautomation.intelpark.R
@@ -119,6 +123,8 @@ fun ServerDialog(current: String, onSave: (String) -> Unit, onDismiss: () -> Uni
     )
 }
 
+private val TurboGreen = Color(0xFF1FA35A)
+
 @Composable
 fun LoginScreen(vm: AuthViewModel, staffFirst: Boolean, onBack: () -> Unit, onSignup: () -> Unit,
                 onDone: (staff: Boolean, nextStep: String?) -> Unit) {
@@ -126,6 +132,7 @@ fun LoginScreen(vm: AuthViewModel, staffFirst: Boolean, onBack: () -> Unit, onSi
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val staff = tab == 1
+    LaunchedEffect(Unit) { vm.checkTurbo() }
     Column(
         Modifier.fillMaxSize().background(IP.Ground).verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -152,6 +159,20 @@ fun LoginScreen(vm: AuthViewModel, staffFirst: Boolean, onBack: () -> Unit, onSi
             { vm.login(staff, email, password, onDone) },
             enabled = email.isNotBlank() && password.isNotBlank(), loading = vm.loading,
         )
+        if (vm.turboEnabled) {
+            // TEST ONLY, like the website: shown while the server runs with TURBO_LOGIN=true
+            Button(
+                onClick = { vm.loginTurbo(staff, onDone) },
+                enabled = !vm.loading,
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = TurboGreen, contentColor = Color.White),
+            ) {
+                Text(stringResource(R.string.turbo_login), style = MaterialTheme.typography.labelLarge)
+            }
+            Text(stringResource(R.string.turbo_hint), style = MaterialTheme.typography.bodySmall, color = IP.Muted,
+                textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        }
         if (!staff) {
             TextButton(onClick = onSignup, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.no_account_create), color = IP.Blue, style = MaterialTheme.typography.labelMedium)
