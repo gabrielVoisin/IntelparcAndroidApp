@@ -19,6 +19,17 @@ android {
         buildConfigField("String", "DEFAULT_SERVER_URL", "\"http://192.168.1.50\"")
     }
 
+    // Fixed debug key, committed on purpose: every build (CI or local) has the same signature,
+    // so a new APK installs over the previous one without uninstalling. Prototype only.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("intelpark-debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             // Prototype: no shrinking (simpler to debug). Enable it with tested ProGuard rules before publishing.
