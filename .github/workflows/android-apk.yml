@@ -1,0 +1,48 @@
+name: APK Android
+
+# Construit l'APK à chaque push sur main (et à la demande depuis l'onglet Actions),
+# puis le publie dans la release « derniere-version » pour l'installer depuis le téléphone.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Construire l'APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+          mkdir -p out
+          cp app/build/outputs/apk/debug/app-debug.apk out/IntelPark.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: IntelPark-apk
+          path: out/IntelPark.apk
+
+      - name: Publier dans la release « derniere-version »
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete derniere-version --yes --cleanup-tag || true
+          gh release create derniere-version out/IntelPark.apk \
+            --title "IntelPark (dernière version)" \
+            --notes "APK construit depuis le commit ${GITHUB_SHA::7}. Ouvrir ce lien sur le téléphone, télécharger IntelPark.apk et l'installer." \
+            --target "$GITHUB_SHA"
