@@ -212,7 +212,7 @@ private fun OneOffBooking(vm: DriverViewModel, site: AppSiteOut?) {
 }
 
 @Composable
-private fun TimeRow(label: String, minutes: Int, onChange: (Int) -> Unit) {
+internal fun TimeRow(label: String, minutes: Int, onChange: (Int) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             Text(label, style = MaterialTheme.typography.labelMedium, color = IP.Muted)

@@ -73,6 +73,7 @@ fun errorMessage(code: String?): Int = when (code) {
     "too_many_codes" -> R.string.err_too_many_codes
     "bay_not_found", "bay_code_invalid" -> R.string.err_bay_not_found
     "bay_blocked" -> R.string.err_bay_blocked
+    "bay_rented" -> R.string.err_bay_rented
     "bay_taken_by_other" -> R.string.err_bay_taken
     "bay_already_booked", "no_free_bay" -> R.string.err_no_free_bay
     "max_stay_exceeded" -> R.string.err_max_stay

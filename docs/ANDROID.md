@@ -4,7 +4,9 @@ Le projet Android Studio est dans `android-app/` (Kotlin, Jetpack Compose, Mater
 application, deux espaces :
 
 * **Conducteur** : création de compte en 4 étapes (compte, plaque, adresse, téléphone vérifié par SMS),
-  accueil, scan du QR code de la place et paiement de la durée, carte des places libres (OpenStreetMap) et
+  accueil, scan du QR code de la place (adresse, GPS et itinéraire) puis, au choix, « Maintenant » (courte durée,
+  paiement immédiat) ou « Plus longtemps » (réservation de cette place de quelques heures à une semaine ; une place
+  louée en pure location est refusée, une place en sous-location reste réservable), carte des places libres (OpenStreetMap) et
   place la plus proche avec guidage, réservation ponctuelle, abonnement mensuel, identification Bluetooth
   à la place.
 * **Agent / administrateur** : contrôle en direct (rafraîchi toutes les 15 s), carte des signalements et

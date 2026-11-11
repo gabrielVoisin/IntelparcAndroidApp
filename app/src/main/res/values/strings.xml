@@ -137,6 +137,18 @@
     <string name="demo_payment">Paiement de démonstration : aucun montant n\'est débité tant qu\'un prestataire de paiement n\'est pas branché sur le serveur.</string>
     <string name="price_per_hour">%1$s / h</string>
     <string name="pay_amount">Payer %1$s</string>
+    <string name="stay_now">Maintenant</string>
+    <string name="stay_later">Plus longtemps</string>
+    <string name="stay_later_title">Réserver cette place</string>
+    <string name="stay_length">Durée</string>
+    <string name="days_n">%1$d j</string>
+    <string name="one_week">1 sem.</string>
+    <string name="book_this_bay">Réserver · %1$s</string>
+    <string name="bay_booked">Place %1$s réservée</string>
+    <string name="bay_rented_out">Cette place est louée : elle ne peut pas être réservée.</string>
+    <string name="bay_sublet">Place louée à l\'année, sous-location autorisée par le locataire.</string>
+    <string name="bay_ref">Réf. %1$s</string>
+    <string name="directions">Itinéraire</string>
     <string name="you_are_parked">Vous êtes garé·e</string>
     <string name="paid_amount">Payé : %1$s</string>
     <string name="free_bays_total">%1$d places libres</string>
@@ -242,6 +254,7 @@
     <string name="err_too_many_codes">Trop de codes demandés. Réessayez dans une heure.</string>
     <string name="err_bay_not_found">Place introuvable. Vérifiez le code (exemple : P1/EXT/05).</string>
     <string name="err_bay_blocked">Cette place est bloquée.</string>
+    <string name="err_bay_rented">Cette place est louée : elle ne peut pas être réservée.</string>
     <string name="err_bay_taken">Cette place est déjà occupée par un autre utilisateur.</string>
     <string name="err_no_free_bay">Aucune place libre sur ce créneau.</string>
     <string name="err_max_stay">Durée maximale de stationnement dépassée.</string>

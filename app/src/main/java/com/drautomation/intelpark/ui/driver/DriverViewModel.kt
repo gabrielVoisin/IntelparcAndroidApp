@@ -80,14 +80,15 @@ class DriverViewModel(private val c: AppContainer) : ViewModel() {
 
     fun lookupBay(code: String, onFound: (String) -> Unit) = task {
         c.driver.bayByCode(code)
-            .onSuccess { bay = it; paidSession = null; setDuration(minutes); onFound(it.id) }
+            .onSuccess { bay = it; paidSession = null; bayBooking = null; laterQuote = null; setDuration(minutes); onFound(it.id) }
             .onFailure { error = it.code() }
     }
 
     fun openBay(bayId: String) {
         if (bay?.id == bayId) return
         viewModelScope.launch {
-            c.driver.bay(bayId).onSuccess { bay = it; paidSession = null; setDuration(minutes) }.onFailure { error = it.code() }
+            c.driver.bay(bayId).onSuccess { bay = it; paidSession = null; bayBooking = null; laterQuote = null; setDuration(minutes) }
+                .onFailure { error = it.code() }
         }
     }
 
@@ -108,6 +109,41 @@ class DriverViewModel(private val c: AppContainer) : ViewModel() {
         c.driver.pay(target.id, minutes, vehicle)
             .onSuccess { paidSession = it; refreshHome(); onPaid() }
             .onFailure { error = it.code() }
+    }
+
+    // --- Scanned bay: book it for a longer stay (reservation on this bay) ----------------------------
+    /** Start of the longer stay and its length in minutes (chosen on the scanned bay's screen). */
+    var laterStart by mutableStateOf<OffsetDateTime?>(null)
+        private set
+    var laterMinutes by mutableIntStateOf(24 * 60)
+        private set
+    var laterQuote by mutableStateOf<QuoteOut?>(null)
+        private set
+    var bayBooking by mutableStateOf<AppReservationOut?>(null)
+        private set
+    private var laterQuoteJob: Job? = null
+
+    fun setLater(start: OffsetDateTime, minutes: Int) {
+        laterStart = start
+        laterMinutes = minutes
+        val bayId = bay?.id ?: return
+        laterQuoteJob?.cancel()
+        laterQuoteJob = viewModelScope.launch {
+            delay(250)
+            c.driver.quote(bayId, minutes, start).onSuccess { laterQuote = it }.onFailure { error = it.code() }
+        }
+    }
+
+    fun bookScannedBay() = task {
+        val target = bay ?: return@task
+        val start = laterStart ?: return@task
+        c.driver.bookBay(target.siteId, target.id, start, start.plusMinutes(laterMinutes.toLong()), home?.driver?.vehicles?.firstOrNull()?.id)
+            .onSuccess { bayBooking = it; reservations = listOf(it) + reservations.filter { r -> r.id != it.id }; refreshHome() }
+            .onFailure { error = it.code() }
+    }
+
+    fun clearBayBooking() {
+        bayBooking = null
     }
 
     fun extend(sessionId: String, extra: Int) = task {
