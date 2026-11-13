@@ -78,13 +78,18 @@ class DriverRepository(private val api: ApiClient, private val store: SessionSto
     suspend fun nearest(lat: Double, lng: Double) = apiCall { d().nearest(lat, lng) }
     suspend fun bayByCode(code: String) = apiCall { d().bayByCode(code) }
     suspend fun bay(id: String) = apiCall { d().bay(id) }
-    suspend fun quote(bayId: String, minutes: Int) = apiCall { d().quote(QuoteIn(bayId, minutes)) }
+    suspend fun quote(bayId: String, minutes: Int, startsAt: OffsetDateTime? = null) =
+        apiCall { d().quote(QuoteIn(bayId, minutes, startsAt?.toString())) }
     suspend fun pay(bayId: String, minutes: Int, vehicleId: String?) = apiCall { d().startSession(SessionIn(bayId, minutes, vehicleId)) }
     suspend fun extend(sessionId: String, minutes: Int) = apiCall { d().extendSession(sessionId, ExtendIn(minutes)) }
 
     suspend fun reservations() = apiCall { d().reservations() }
     suspend fun book(siteId: String, start: OffsetDateTime, end: OffsetDateTime, vehicleId: String?) = apiCall {
         d().book(AppReservationIn(siteId, start.toString(), end.toString(), vehicleId = vehicleId))
+    }
+    /** Longer stay on the bay whose QR code was scanned. */
+    suspend fun bookBay(siteId: String, bayId: String, start: OffsetDateTime, end: OffsetDateTime, vehicleId: String?) = apiCall {
+        d().book(AppReservationIn(siteId, start.toString(), end.toString(), bayId = bayId, vehicleId = vehicleId))
     }
     suspend fun cancelBooking(id: String) = apiCall { d().cancelBooking(id) }
     suspend fun plans() = apiCall { d().plans() }

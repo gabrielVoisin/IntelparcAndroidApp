@@ -13,8 +13,8 @@ android {
         applicationId = "com.drautomation.intelpark"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.2.0"
         // Address of the server on the Raspberry Pi; can be changed in the app (Welcome screen > gear icon)
         buildConfigField("String", "DEFAULT_SERVER_URL", "\"http://192.168.1.50\"")
     }

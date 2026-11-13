@@ -126,13 +126,21 @@ data class AppBayOut(
     val maxStayMin: Int,
     val latitude: Double? = null,
     val longitude: Double? = null,
+    /** Reference of the bay's QR code (main database), e.g. IPK-7F3K9Q. */
+    val reference: String? = null,
+    /** Street and address of the bay (else of the car park). */
+    val street: String? = null,
+    /** not_rented, rented_sublet (rented, sub-letting allowed) or rented_exclusive (rented outright). */
+    val rentalStatus: String = "not_rented",
+    /** False when the bay is blocked or rented outright: it cannot be paid or booked. */
+    val bookable: Boolean = true,
 )
 
 @Serializable
 data class NearestOut(val site: AppSiteOut, val bay: AppBayOut? = null)
 
 @Serializable
-data class QuoteIn(val bayId: String, val minutes: Int)
+data class QuoteIn(val bayId: String, val minutes: Int, val startsAt: String? = null)
 
 @Serializable
 data class QuoteOut(val bayId: String, val minutes: Int, val startsAt: String, val endsAt: String, val price: Money)

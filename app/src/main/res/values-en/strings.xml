@@ -137,6 +137,18 @@
     <string name="demo_payment">Demo payment: nothing is charged until a payment provider is connected to the server.</string>
     <string name="price_per_hour">%1$s / h</string>
     <string name="pay_amount">Pay %1$s</string>
+    <string name="stay_now">Now</string>
+    <string name="stay_later">Longer</string>
+    <string name="stay_later_title">Book this spot</string>
+    <string name="stay_length">Length</string>
+    <string name="days_n">%1$d d</string>
+    <string name="one_week">1 wk</string>
+    <string name="book_this_bay">Book · %1$s</string>
+    <string name="bay_booked">Spot %1$s booked</string>
+    <string name="bay_rented_out">This spot is rented: it cannot be booked.</string>
+    <string name="bay_sublet">Spot rented long-term, the tenant allows sub-letting.</string>
+    <string name="bay_ref">Ref. %1$s</string>
+    <string name="directions">Directions</string>
     <string name="you_are_parked">You\'re parked</string>
     <string name="paid_amount">Paid: %1$s</string>
     <string name="free_bays_total">%1$d free spots</string>
@@ -242,6 +254,7 @@
     <string name="err_too_many_codes">Too many codes requested. Try again in an hour.</string>
     <string name="err_bay_not_found">Spot not found. Check the code (example: P1/EXT/05).</string>
     <string name="err_bay_blocked">This spot is blocked.</string>
+    <string name="err_bay_rented">This spot is rented: it cannot be booked.</string>
     <string name="err_bay_taken">This spot is already used by another driver.</string>
     <string name="err_no_free_bay">No free spot for that time.</string>
     <string name="err_max_stay">Maximum parking time exceeded.</string>
